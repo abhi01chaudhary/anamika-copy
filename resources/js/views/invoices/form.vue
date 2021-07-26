@@ -108,7 +108,7 @@
                         <td>{{subTotal | formatMoney}}</td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="form-summary">Discount</td>
+                        <td colspan="3" class="form-summary">Discount (%)</td>
                         <td>
                             <input type="text" class="form-control" v-model="form.discount">
                             <small class="form-control" v-if="errors.discount">
@@ -193,7 +193,7 @@
                 }, 0)
             },
             total() {
-                return this.subTotal - Number(this.form.discount)
+                return this.subTotal - (this.subTotal * Number(this.form.discount)) / 100
             }
         },
         methods: {

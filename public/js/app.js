@@ -2311,7 +2311,7 @@ function initialize(to) {
       }, 0);
     },
     total: function total() {
-      return this.subTotal - Number(this.form.discount);
+      return this.subTotal - this.subTotal * Number(this.form.discount) / 100;
     }
   },
   methods: {
@@ -39243,7 +39243,7 @@ var render = function() {
                 _c(
                   "td",
                   { staticClass: "form-summary", attrs: { colspan: "3" } },
-                  [_vm._v("Discount")]
+                  [_vm._v("Discount (%)")]
                 ),
                 _vm._v(" "),
                 _c("td", [
