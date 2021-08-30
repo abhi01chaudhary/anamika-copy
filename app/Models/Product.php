@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description', 'unit_price'
+        'description', 'unit_price', 'item_code', 'quantity'
     ];
 
     protected $appends = ['text'];

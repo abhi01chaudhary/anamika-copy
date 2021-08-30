@@ -24,7 +24,8 @@ class CustomerSeeder extends Seeder
                 'firstname' => $faker->firstname,
                 'lastname' => $faker->lastname,
                 'email' => $faker->safeEmail,
-                'address'=> $faker->address
+                'address'=> $faker->address,
+                'phone' => $faker->numerify('##########')
             ]);
         }
     }

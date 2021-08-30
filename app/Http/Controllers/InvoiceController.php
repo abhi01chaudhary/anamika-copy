@@ -31,7 +31,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $counter = Counter::where('key', 'invoice')->first();
+        $counter = Counter::where('key', 'Invoice')->first();
 
         $form = [
             'number' => $counter->prefix . $counter->value,
@@ -85,7 +85,7 @@ class InvoiceController extends Controller
         });
 
         $invoice = DB::transaction(function() use ($invoice, $request) {
-            $counter = Counter::where('key', 'invoice')->first();
+            $counter = Counter::where('key', 'Invoice')->first();
             $invoice->number = $counter->prefix . $counter->value;
 
             // custom method from app/Helper/HasManyRelation

@@ -64,7 +64,6 @@
                     next(vm => vm.setData(res))
                 })
         },
-
         beforeRouteUpdate(to, from, next) {
             get('/api/invoices', to.query)
                 .then((res) => {
@@ -72,7 +71,6 @@
                     next()
                 })
         },
-        
         methods: {
             detailsPage(item) {
                 this.$router.push(`/invoices/${item.id}`)

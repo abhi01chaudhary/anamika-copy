@@ -11,13 +11,14 @@ class Customer extends Model
 
     protected $fillable = [
         'firstname', 'lastname', 'email',
-        'address'
+        'address', 'phone'
     ];
 
     protected $appends = ['text'];
 
     public function getTextAttribute()
     {
-        return $this->attributes['firstname']. ' - '.$this->attributes['lastname'];
+        return $this->attributes['firstname'].'  '.$this->attributes['lastname'];
     }
+
 }

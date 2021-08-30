@@ -1,10 +1,12 @@
 <template>
-    <div class="container">
-        <div class="navbar">&nbsp;</div>
-        <div class="content">
-            <transition name="fade" mode="out-in">
-                <router-view class="page" :key="$route.path"></router-view>
-            </transition>
-        </div>
-    </div>
+    <router-view></router-view>
 </template>
+
+<script>
+export default {
+    name: "App",
+    data(){
+        return {}
+    }
+}
+</script>

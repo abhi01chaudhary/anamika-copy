@@ -18,9 +18,10 @@ class ProductSeeder extends Seeder
 
         foreach(range(10, 60) as $i) {
             Product::create([
-                'item_code' => 'PDT-1000'.$i,
-                'description' => 'Name of Product '.$i,
-                'unit_price' => mt_rand(100, 1000)
+                'item_code' => 'PDT-Copy-SLB'.$i,
+                'description' => 'Super Long Book '.$i,
+                'unit_price' => mt_rand(100, 1000),
+                'quantity' => mt_rand(10, 1000),
             ]);
         }
     }

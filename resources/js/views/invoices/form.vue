@@ -168,8 +168,8 @@
                 store: '/api/invoices',
                 method: 'POST',
                 title: 'Create',
-                productURL: '/api/products',
-                customerURL: '/api/customers'
+                productURL: '/api/products/search',
+                customerURL: '/api/customers/search'
             }
         },
         beforeRouteEnter(to, from, next) {

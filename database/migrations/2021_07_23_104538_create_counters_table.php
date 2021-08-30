@@ -23,7 +23,7 @@ class CreateCountersTable extends Migration
         });
 
         Counter::create([
-            'key' => 'invoice',
+            'key' => 'Invoice',
             'prefix' => 'INV-',
             'value' => 10000
         ]);

@@ -22,7 +22,7 @@
                         <li class="typeahead-item" v-for="(result, index) in results" :key="result.id">
                             <a :class="['typeahead-link', selectIndex === index ? 'typeahead-active':'']"
                                 @mousedown.prevent="select(result)"
-                                @mouseover.prevent="onMouse(index)">
+                                @mouseover.prevent="onMouse(index)" style="text-decoration:none;">
                                 {{result.text}}
                             </a>
                         </li>

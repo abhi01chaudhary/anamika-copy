@@ -30,7 +30,7 @@ export default {
         clearInterval(this._timer)
         this.percent = 0
       }
-      this._cut = 10000 / Math.floor(this.duration)
+      this._cut = 1000000 / Math.floor(this.duration)
       this._timer = setInterval(() => {
         this.increase(this._cut * Math.random())
         if (this.percent > 95) {
