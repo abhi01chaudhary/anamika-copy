@@ -11,7 +11,7 @@ class Expense extends Model
     use HasFactory, HasManyRelation;
 
     protected $fillable = [
-        'customer_id', 'date', 'due_date', 'discount',
+        'vendor_id', 'date', 'due_date', 'discount',
         'terms_and_conditions', 'reference'
     ];
 
@@ -19,14 +19,14 @@ class Expense extends Model
         'number', 'sub_total', 'total'
     ];
 
-    public function customer()
+    public function vendor()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Vendor::class);
     }
 
     public function items()
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(ExpenseItem::class);
     }
 
     public function setSubTotalAttribute($value)

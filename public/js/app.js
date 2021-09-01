@@ -3989,12 +3989,12 @@ __webpack_require__.r(__webpack_exports__);
       show: false,
       model: {
         items: [],
-        customer: {}
+        vendor: {}
       }
     };
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.get)("/api/invoices/".concat(to.params.id)).then(function (res) {
+    (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.get)("/api/expenses/".concat(to.params.id)).then(function (res) {
       next(function (vm) {
         return vm.setData(res);
       });
@@ -4004,7 +4004,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.show = false;
-    (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.get)("/api/invoices/".concat(to.params.id)).then(function (res) {
+    (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.get)("/api/expenses/".concat(to.params.id)).then(function (res) {
       _this.setData(res);
 
       next();
@@ -4019,9 +4019,9 @@ __webpack_require__.r(__webpack_exports__);
     deleteItem: function deleteItem() {
       var _this2 = this;
 
-      (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)('delete', "/api/invoices/".concat(this.model.id)).then(function (res) {
+      (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)('delete', "/api/expenses/".concat(this.model.id)).then(function (res) {
         if (res.data.deleted) {
-          _this2.$router.push('/invoices');
+          _this2.$router.push('/expenses');
         }
       });
     }
@@ -44927,7 +44927,7 @@ var render = function() {
           {
             staticClass:
               "sidebar-brand d-flex align-items-center justify-content-center",
-            attrs: { to: { path: "/" } }
+            attrs: { to: { path: "/dashboard" } }
           },
           [
             _c("div", { staticClass: "sidebar-brand-icon rotate-n-15" }, [
@@ -47024,7 +47024,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text" },
+                      attrs: { type: "number" },
                       domProps: { value: item.unit_price },
                       on: {
                         input: function($event) {
@@ -47060,7 +47060,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text" },
+                      attrs: { type: "number" },
                       domProps: { value: item.qty },
                       on: {
                         input: function($event) {
@@ -47154,7 +47154,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "number" },
                     domProps: { value: _vm.form.discount },
                     on: {
                       input: function($event) {
@@ -47240,11 +47240,7 @@ var render = function() {
           _c("div", [
             _c(
               "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { disabled: _vm.isProcessing },
-                on: { click: _vm.onSave }
-              },
+              { staticClass: "btn btn-primary", on: { click: _vm.onSave } },
               [_vm._v("Save")]
             ),
             _vm._v(" "),
@@ -47365,7 +47361,7 @@ var render = function() {
                 _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.number))]),
                 _vm._v(" "),
                 _c("td", { staticClass: "w-9" }, [
-                  _vm._v(_vm._s(item.customer.text))
+                  _vm._v(_vm._s(item.vendor.text))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "w-3" }, [
@@ -47434,7 +47430,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Number")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Customer")]),
+        _c("th", [_vm._v("Vendor")]),
         _vm._v(" "),
         _c("th", [_vm._v("Due Date")]),
         _vm._v(" "),
@@ -47477,7 +47473,7 @@ var render = function() {
             [
               _c(
                 "router-link",
-                { staticClass: "btn", attrs: { to: "/invoices" } },
+                { staticClass: "btn", attrs: { to: "/expenses" } },
                 [_vm._v("Back")]
               ),
               _vm._v(" "),
@@ -47485,7 +47481,7 @@ var render = function() {
                 "router-link",
                 {
                   staticClass: "btn",
-                  attrs: { to: "/invoices/" + _vm.model.id + "/edit" }
+                  attrs: { to: "/expenses/" + _vm.model.id + "/edit" }
                 },
                 [_vm._v("Edit")]
               ),
@@ -47504,12 +47500,12 @@ var render = function() {
           _c("div", { staticClass: "document" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-6" }, [
-                _c("strong", [_vm._v("To:")]),
+                _c("strong", [_vm._v("From:")]),
                 _vm._v(" "),
                 _c("div", [
-                  _c("span", [_vm._v(_vm._s(_vm.model.customer.text))]),
+                  _c("span", [_vm._v(_vm._s(_vm.model.vendor.text))]),
                   _vm._v(" "),
-                  _c("pre", [_vm._v(_vm._s(_vm.model.customer.address))])
+                  _c("pre", [_vm._v(_vm._s(_vm.model.vendor.address))])
                 ])
               ]),
               _vm._v(" "),
@@ -47557,11 +47553,11 @@ var render = function() {
                   _vm._l(_vm.model.items, function(item) {
                     return _c("tr", { key: item.id }, [
                       _c("td", { staticClass: "w-3" }, [
-                        _vm._v(_vm._s(item.product.item_code))
+                        _vm._v(_vm._s(item.item.item_name))
                       ]),
                       _vm._v(" "),
                       _c("td", { staticClass: "w-12" }, [
-                        _c("pre", [_vm._v(_vm._s(item.product.description))])
+                        _c("pre", [_vm._v(_vm._s(item.item.description))])
                       ]),
                       _vm._v(" "),
                       _c("td", { staticClass: "w-3" }, [
@@ -47633,7 +47629,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "2" } }, [
-        _c("span", { staticClass: "document-title" }, [_vm._v("INVOICE")])
+        _c("span", { staticClass: "document-title" }, [
+          _vm._v("Expense Invoice")
+        ])
       ])
     ])
   },
@@ -47897,7 +47895,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text" },
+                      attrs: { type: "number" },
                       domProps: { value: item.unit_price },
                       on: {
                         input: function($event) {
@@ -47933,7 +47931,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text" },
+                      attrs: { type: "number" },
                       domProps: { value: item.qty },
                       on: {
                         input: function($event) {
@@ -48027,7 +48025,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "number" },
                     domProps: { value: _vm.form.discount },
                     on: {
                       input: function($event) {
@@ -48113,11 +48111,7 @@ var render = function() {
           _c("div", [
             _c(
               "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { disabled: _vm.isProcessing },
-                on: { click: _vm.onSave }
-              },
+              { staticClass: "btn btn-primary", on: { click: _vm.onSave } },
               [_vm._v("Save")]
             ),
             _vm._v(" "),

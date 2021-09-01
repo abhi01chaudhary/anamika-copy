@@ -15,7 +15,7 @@
                         <th>ID</th>
                         <th>Date</th>
                         <th>Number</th>
-                        <th>Customer</th>
+                        <th>Vendor</th>
                         <th>Due Date</th>
                         <th>Total</th>
                     </tr>
@@ -25,7 +25,7 @@
                         <td class="w-1">{{item.id}}</td>
                         <td class="w-3">{{item.date}}</td>
                         <td class="w-3">{{item.number}}</td>
-                        <td class="w-9">{{item.customer.text}}</td>
+                        <td class="w-9">{{item.vendor.text}}</td>
                         <td class="w-3">{{item.due_date}}</td>
                         <td class="w-3">{{item.total | formatMoney}}</td>
                     </tr>

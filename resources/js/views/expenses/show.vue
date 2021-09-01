@@ -3,8 +3,8 @@
         <div class="panel-heading">
             <span class="panel-title">{{model.number}}</span>
             <div>
-                <router-link to="/invoices" class="btn">Back</router-link>
-                <router-link :to="`/invoices/${model.id}/edit`" class="btn">Edit</router-link>
+                <router-link to="/expenses" class="btn">Back</router-link>
+                <router-link :to="`/expenses/${model.id}/edit`" class="btn">Edit</router-link>
                 <button class="btn btn-error" @click="deleteItem">Delete</button>
             </div>
         </div>
@@ -12,10 +12,10 @@
             <div class="document">
                 <div class="row">
                     <div class="col-6">
-                        <strong>To:</strong>
+                        <strong>From:</strong>
                         <div>
-                            <span>{{model.customer.text}}</span>
-                            <pre>{{model.customer.address}}</pre>
+                            <span>{{model.vendor.text}}</span>
+                            <pre>{{model.vendor.address}}</pre>
                         </div>
                     </div>
                     <div class="col-6 col-offset-12">
@@ -23,7 +23,7 @@
                             <tbody>
                                 <tr>
                                     <td colspan="2">
-                                        <span class="document-title">INVOICE</span>
+                                        <span class="document-title">Expense Invoice</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -59,9 +59,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in model.items" :key="item.id">
-                                <td class="w-3">{{item.product.item_code}}</td>
+                                <td class="w-3">{{item.item.item_name}}</td>
                                 <td class="w-12">
-                                    <pre>{{item.product.description}}</pre>
+                                    <pre>{{item.item.description}}</pre>
                                 </td>
                                 <td class="w-3">{{item.unit_price | formatMoney}}</td>
                                 <td class="w-2">{{item.qty}}</td>
@@ -102,19 +102,19 @@
                 show: false,
                 model: {
                     items: [],
-                    customer: {}
+                    vendor: {}
                 }
             }
         },
         beforeRouteEnter(to, from, next) {
-            get(`/api/invoices/${to.params.id}`)
+            get(`/api/expenses/${to.params.id}`)
                 .then((res) => {
                     next(vm => vm.setData(res))
                 })
         },
         beforeRouteUpdate(to, from, next) {
             this.show = false
-            get(`/api/invoices/${to.params.id}`)
+            get(`/api/expenses/${to.params.id}`)
                 .then((res) => {
                     this.setData(res)
                     next()
@@ -127,10 +127,10 @@
                 this.$bar.finish()
             },
             deleteItem() {
-                byMethod('delete', `/api/invoices/${this.model.id}`)
+                byMethod('delete', `/api/expenses/${this.model.id}`)
                     .then((res) => {
                         if(res.data.deleted) {
-                            this.$router.push('/invoices')
+                            this.$router.push('/expenses')
                         }
                     })
             }

@@ -11,7 +11,7 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $results = Expense::with(['customer'])
+        $results = Expense::with(['vendor'])
         ->orderBy('created_at', 'desc')
         ->paginate(15);
 
@@ -77,9 +77,9 @@ class ExpenseController extends Controller
         $expense->sub_total = collect($request->items)->sum(function($item) {
             return $item['qty'] * $item['unit_price'];
         });
-        dd($request->all());
+
         $expense = DB::transaction(function() use ($expense, $request) {
-            $counter = ExpenseCounter::where('key', 'Invoice')->first();
+            $counter = ExpenseCounter::where('key', 'Expense')->first();
             $expense->number = $counter->prefix . $counter->value;
             // custom method from app/Helper/HasManyRelation
             $expense->storeHasMany([
@@ -103,7 +103,7 @@ class ExpenseController extends Controller
      */
     public function show($id)
     {
-        $model = Expense::with(['customer', 'items.product'])
+        $model = Expense::with(['vendor', 'items.item'])
             ->findOrFail($id);
 
         return response()
@@ -118,7 +118,7 @@ class ExpenseController extends Controller
      */
     public function edit($id)
     {
-        $form = Expense::with(['customer', 'items.product'])
+        $form = Expense::with(['vendor', 'items.item'])
             ->findOrFail($id);
 
         return response()
@@ -134,7 +134,7 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $invoice = Expense::findOrFail($id);
+        $expense = Expense::findOrFail($id);
 
         $request->validate([
             'vendor_id' => 'required|integer|exists:vendors,id',
@@ -144,29 +144,29 @@ class ExpenseController extends Controller
             'discount' => 'required|numeric|min:0',
             'terms_and_conditions' => 'required|max:2000',
             'items' => 'required|array|min:1',
-            'items.*.id' => 'sometimes|required|integer|exists:invoice_items,id,invoice_id,'.$invoice->id,
+            'items.*.id' => 'sometimes|required|integer|exists:expense_items,id,expense_id,'.$expense->id,
             'items.*.item_id' => 'required|integer|exists:items,id',
             'items.*.unit_price' => 'required|numeric|min:0',
             'items.*.qty' => 'required|integer|min:1'
         ]);
 
-        $invoice->fill($request->except('items'));
+        $expense->fill($request->except('items'));
 
-        $invoice->sub_total = collect($request->items)->sum(function($item) {
+        $expense->sub_total = collect($request->items)->sum(function($item) {
             return $item['qty'] * $item['unit_price'];
         });
 
-        $invoice = DB::transaction(function() use ($invoice, $request) {
+        $expense = DB::transaction(function() use ($expense, $request) {
             // custom method from app/Helper/HasManyRelation
-            $invoice->updateHasMany([
+            $expense->updateHasMany([
                 'items' => $request->items
             ]);
 
-            return $invoice;
+            return $expense;
         });
 
         return response()
-            ->json(['saved' => true, 'id' => $invoice->id]);
+            ->json(['saved' => true, 'id' => $expense->id]);
     }
 
     /**

@@ -15,7 +15,6 @@ trait HasManyRelation {
                 $model = $this->{$key}()->getModel();
                 $newItems[] = $model->fill($item);
             }
-
             // save
             $this->{$key}()->saveMany($newItems);
         }

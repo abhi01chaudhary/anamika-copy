@@ -77,13 +77,13 @@
                             </small>
                         </td>
                         <td class="w-4">
-                            <input type="text" class="form-control" v-model="item.unit_price">
+                            <input type="number" class="form-control" v-model="item.unit_price">
                             <small class="error-control" v-if="errors[`items.${index}.unit_price`]">
                                 {{errors[`items.${index}.unit_price`][0]}}
                             </small>
                         </td>
                         <td class="w-2">
-                            <input type="text" class="form-control" v-model="item.qty">
+                            <input type="number" class="form-control" v-model="item.qty">
                             <small class="error-control" v-if="errors[`items.${index}.qty`]">
                                 {{errors[`items.${index}.qty`][0]}}
                             </small>
@@ -110,7 +110,7 @@
                     <tr>
                         <td colspan="3" class="form-summary">Discount (%)</td>
                         <td>
-                            <input type="text" class="form-control" v-model="form.discount">
+                            <input type="number" class="form-control" v-model="form.discount">
                             <small class="form-control" v-if="errors.discount">
                                 {{errors.discount[0]}}
                             </small>
@@ -137,7 +137,7 @@
         </div>
         <div class="panel-footer flex-end">
             <div>
-                <button class="btn btn-primary" :disabled="isProcessing" @click="onSave">Save</button>
+                <button class="btn btn-primary" @click="onSave">Save</button>
                 <button class="btn" :disabled="isProcessing" @click="onCancel">Cancel</button>
             </div>
         </div>
