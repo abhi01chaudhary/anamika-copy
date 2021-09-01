@@ -27,12 +27,6 @@
       return {
         isLoggedIn: false
       }
-    },
-    methods:{
-      logout(){
-        localStorage.removeItem('usertoken')
-        this.$router.push('login')
-      }
     }
   }
 </script>

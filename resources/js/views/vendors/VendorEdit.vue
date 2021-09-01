@@ -2,7 +2,7 @@
     <div>
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Add Customer</span>
+                <span class="panel-title">Edit Customer</span>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -69,41 +69,69 @@
 
 <script>
     import {get, byMethod } from '../../lib/api'
+
     export default {
+        name: 'VendorEdit',
         data(){
             return {
                 form: {},
                 isProcessing: false,
-                store: `/api/customers/store`,
-                resource: '/customers'
+                store: `/api/vendors/`,
+                method: 'PUT',
+                title: 'Edit',
+                resource: '/vendors'
             }
         },
-        methods:{
+        beforeRouteEnter(to, from, next) {
+            get(`/api/vendors/${to.params.id}`)
+                .then((res) => {
+                    next(vm => vm.setData(res))
+                })
+        },
+        beforeRouteUpdate(to, from, next) {
+            this.show = false
+            get(`/api/vendors/${to.params.id}`)
+                .then((res) => {
+                    this.setData(res)
+                    next()
+                })
+        },
+        methods: {
             errors(){
-                console.log('here');
+                console.log('errors')
+            },
+            setData(res) {
+                Vue.set(this.$data, 'form', res.data.model)
+                this.store = `/api/vendors/${this.$route.params.id}`
+                this.show = true
+                this.$bar.finish()
             },
             onSave() {
                 this.errors = {}
                 this.isProcessing = true
 
-                axios.post(this.store, this.form)
+                byMethod(this.method, this.store, this.form)
                 .then((res) => {
-                    this.$router.push(`${this.resource}`)
-                    //Perform Success Action
+                    if(res.data && res.data.saved) {
+                        this.success(res)
+                    }
                 })
                 .catch((error) => {
-                    // error.response.status Check status code
                     if(error.response.status === 422) {
                         this.errors = error.response.data.errors
                     }
                     this.isProcessing = false
-                }).finally(() => {
-                    //Perform action in always
-                });
-
+                })
             },
             onCancel() {
-                this.$router.push(`${this.resource}`)
+                if(this.$route.meta.mode === 'edit') {
+                    this.$router.push(`${this.resource}/${this.form.id}`)
+                } else {
+                    this.$router.push(`${this.resource}`)
+                }
+            },
+            success(res) {
+                this.$router.push(`${this.resource}/${res.data.id}`)
             }
         }
     }

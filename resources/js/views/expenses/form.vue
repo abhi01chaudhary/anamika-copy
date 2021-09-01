@@ -7,11 +7,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label>Customer</label>
-                        <typeahead :url="customerURL" :initialize="form.customer"
-                            @input="onCustomer" />
-                        <small class="error-control" v-if="errors.customer_id">
-                            {{errors.customer_id[0]}}
+                        <label>Vendor</label>
+                        <typeahead :url="customerURL" :initialize="form.vendor"
+                            @input="onVendor" />
+                        <small class="error-control" v-if="errors.vendor_id">
+                            {{errors.vendor_id[0]}}
                         </small>
                     </div>
                 </div>
@@ -70,10 +70,10 @@
                 <tbody>
                     <tr v-for="(item, index) in form.items">
                         <td class="w-14">
-                            <typeahead :url="productURL" :initialize="item.product"
-                                @input="onProduct(index, $event)" />
-                            <small class="error-control" v-if="errors[`items.${index}.product_id`]">
-                                {{errors[`items.${index}.product_id`][0]}}
+                            <typeahead :url="productURL" :initialize="item.item"
+                                @input="onItem(index, $event)" />
+                            <small class="error-control" v-if="errors[`items.${index}.item_id`]">
+                                {{errors[`items.${index}.item_id`][0]}}
                             </small>
                         </td>
                         <td class="w-4">
@@ -168,8 +168,8 @@
                 store: '/api/expenses',
                 method: 'POST',
                 title: 'Create',
-                productURL: '/api/products/search',
-                customerURL: '/api/customers/search'
+                productURL: '/api/items/search',
+                customerURL: '/api/search/vendors'
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -211,23 +211,22 @@
             },
             addNewLine() {
                 this.form.items.push({
-                    product_id: null,
-                    product: null,
+                    item_id: null,
+                    item: null,
                     unit_price: 0,
                     qty: 1
                 })
             },
-            onCustomer(e) {
-                const customer = e.target.value
-                Vue.set(this.$data.form, 'customer', customer)
-                Vue.set(this.$data.form, 'customer_id', customer.id)
+            onVendor(e) {
+                const vendor = e.target.value
+                Vue.set(this.$data.form, 'vendor', vendor)
+                Vue.set(this.$data.form, 'vendor_id', vendor.id)
             },
-            onProduct(index, e) {
-                const product = e.target.value
-                Vue.set(this.form.items[index], 'product', product)
-                Vue.set(this.form.items[index], 'product_id', product.id)
-
-                Vue.set(this.form.items[index], 'unit_price', product.unit_price)
+            onItem(index, e) {
+                const item = e.target.value
+                Vue.set(this.form.items[index], 'item', item)
+                Vue.set(this.form.items[index], 'item_id', item.id)
+                Vue.set(this.form.items[index], 'unit_price', item.unit_price)
             },
             removeItem(index) {
                 this.form.items.splice(index, 1)

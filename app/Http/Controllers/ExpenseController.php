@@ -26,12 +26,12 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $counter = ExpenseCounter::where('key', 'Invoice')->first();
+        $counter = ExpenseCounter::where('key', 'Expense')->first();
 
         $form = [
             'number' => $counter->prefix . $counter->value,
-            'customer_id' => null,
-            'customer' => null,
+            'vendor_id' => null,
+            'vendor' => null,
             'date' => date('Y-m-d'),
             'due_date' => null,
             'reference' => null,
@@ -39,8 +39,8 @@ class ExpenseController extends Controller
             'terms_and_conditions' => 'Default Terms',
             'items' => [
                 [
-                    'product_id' => null,
-                    'product' => null,
+                    'item_id' => null,
+                    'item' => null,
                     'unit_price' => 0,
                     'qty' => 1
                 ]
@@ -60,29 +60,27 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_id' => 'required|integer|exists:customers,id',
+            'vendor_id' => 'required|integer|exists:vendors,id',
             'date' => 'required|date_format:Y-m-d',
-            'due_date' => 'required|date_format:Y-m-d',
+            'due_date' => 'date_format:Y-m-d',
             'reference' => 'nullable|max:100',
             'discount' => 'required|numeric|min:0',
             'terms_and_conditions' => 'required|max:2000',
             'items' => 'required|array|min:1',
-            'items.*.product_id' => 'required|integer|exists:products,id',
+            'items.*.item_id' => 'required|integer|exists:items,id',
             'items.*.unit_price' => 'required|numeric|min:0',
             'items.*.qty' => 'required|integer|min:1'
         ]);
 
         $expense = new Expense;
         $expense->fill($request->except('items'));
-
         $expense->sub_total = collect($request->items)->sum(function($item) {
             return $item['qty'] * $item['unit_price'];
         });
-        
+        dd($request->all());
         $expense = DB::transaction(function() use ($expense, $request) {
             $counter = ExpenseCounter::where('key', 'Invoice')->first();
             $expense->number = $counter->prefix . $counter->value;
-
             // custom method from app/Helper/HasManyRelation
             $expense->storeHasMany([
                 'items' => $request->items
@@ -139,7 +137,7 @@ class ExpenseController extends Controller
         $invoice = Expense::findOrFail($id);
 
         $request->validate([
-            'customer_id' => 'required|integer|exists:customers,id',
+            'vendor_id' => 'required|integer|exists:vendors,id',
             'date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
             'reference' => 'nullable|max:100',
@@ -147,7 +145,7 @@ class ExpenseController extends Controller
             'terms_and_conditions' => 'required|max:2000',
             'items' => 'required|array|min:1',
             'items.*.id' => 'sometimes|required|integer|exists:invoice_items,id,invoice_id,'.$invoice->id,
-            'items.*.product_id' => 'required|integer|exists:products,id',
+            'items.*.item_id' => 'required|integer|exists:items,id',
             'items.*.unit_price' => 'required|numeric|min:0',
             'items.*.qty' => 'required|integer|min:1'
         ]);

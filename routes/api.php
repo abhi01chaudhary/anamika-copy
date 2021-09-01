@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ItemController;
@@ -36,5 +37,9 @@ Route::resource('/products', ProductController::class);
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [LoginController::class, 'register']);
+Route::get('/items/search', [ItemController::class, 'search']);
 Route::resource('/items', ItemController::class);
 Route::resource('/expenses', ExpenseController::class);
+Route::resource('/vendors', VendorController::class);
+Route::get('/search/vendors', [VendorController::class, 'search']);
+

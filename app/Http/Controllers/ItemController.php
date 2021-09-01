@@ -7,6 +7,19 @@ use App\Models\Item;
 
 class ItemController extends Controller
 {
+    public function search()
+    {
+        $results = Item::when(request('q'), function($query) {
+                $query->where('item_name', 'like', '%'.request('q').'%')
+                ->orWhere('description', 'like', '%'.request('q').'%');
+            })
+            ->limit(6)
+            ->get();
+
+        return response()
+            ->json(['results' => $results]);
+    }
+
     public function index(){
         $results = Item::latest()->paginate(10);
         return response()

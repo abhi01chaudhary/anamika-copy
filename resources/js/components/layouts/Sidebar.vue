@@ -62,6 +62,29 @@
           class="nav-link collapsed"
           href="#"
           data-toggle="collapse"
+          data-target="#collapse-vendors"
+          aria-expanded="true"
+          aria-controls="collapse-vendors"
+        >
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Vendors</span>
+        </a>
+        <div
+          id="collapse-vendors"
+          class="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar"
+        >
+          <div class="bg-white py-2 collapse-inner rounded">
+            <router-link :to="{ name: 'vendors'}" class="collapse-item">Vendor List</router-link>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link collapsed"
+          href="#"
+          data-toggle="collapse"
           data-target="#collapse-products"
           aria-expanded="true"
           aria-controls="collapse-products"

@@ -23,7 +23,7 @@ class CreateExpenseCountersTable extends Migration
         });
 
         ExpenseCounter::create([
-            'key' => 'Invoice',
+            'key' => 'Expense',
             'prefix' => 'EXP-',
             'value' => 10000
         ]);

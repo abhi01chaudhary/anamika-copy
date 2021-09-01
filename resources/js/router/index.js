@@ -8,6 +8,10 @@ import CustomerIndex from '../views/customers/CustomerIndex.vue'
 import CustomerCreate from '../views/customers/CustomerCreate.vue'
 import CustomerShow from '../views/customers/CustomerShow.vue'
 import CustomerEdit from '../views/customers/CustomerEdit.vue'
+import VendorIndex from '../views/vendors/VendorIndex.vue'
+import VendorShow from '../views/vendors/VendorShow.vue'
+import VendorCreate from '../views/vendors/VendorCreate.vue'
+import VendorEdit from '../views/vendors/VendorEdit.vue'
 import ProductIndex from '../views/products/ProductIndex.vue'
 import ProductCreate from '../views/products/ProductCreate.vue'
 import ProductShow from '../views/products/ProductShow.vue'
@@ -100,6 +104,29 @@ const router = new VueRouter({
                     }
                 },
                 {
+                    path: '/vendors',
+                    name: 'vendors',
+                    component: VendorIndex
+                },
+                {
+                    path: '/vendors/create',
+                    name: 'vendors-create',
+                    component: VendorCreate
+                },
+                {
+                    path: '/vendors/:id',
+                    name:'vendors-show',
+                    component: VendorShow
+                },
+                {
+                    path: '/vendors/:id/edit',
+                    component: VendorEdit,
+                    name: 'vendors-edit',
+                    meta: {
+                        mode:'edit'
+                    }
+                },
+                {
                     path: '/products',
                     name: 'products',
                     component: ProductIndex
@@ -174,8 +201,23 @@ const router = new VueRouter({
             path: '*', 
             name: 'error',
             component: ErrorRoute
-        }
+        },
     ]
 })
 
 export default router
+
+
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/login', '/register'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('token');
+    // trying to access a restricted page + not logged in
+    // redirect to login page
+    if (authRequired && !loggedIn) {
+        console.log('reached')
+        next('/login');
+    } else {
+        next();
+    }
+});

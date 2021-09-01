@@ -16,7 +16,7 @@ class CreateExpensesTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique();
-            $table->integer('customer_id')->unsigned();
+            $table->integer('vendor_id')->unsigned();
             $table->date('date');
             $table->date('due_date');
             $table->string('reference')->nullable();
@@ -45,5 +45,6 @@ class CreateExpensesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('expenses');
+        Schema::dropIfExists('expense_items');
     }
 }

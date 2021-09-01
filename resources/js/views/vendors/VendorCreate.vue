@@ -2,7 +2,7 @@
     <div>
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Add Customer</span>
+                <span class="panel-title">Add Vendor</span>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -21,6 +21,15 @@
                             <input type="text" class="form-control" v-model="form.lastname" placeholder="Last Name">
                             <small class="error-control" v-if="errors.lastname">
                                 {{errors.lastname[0]}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Vendor Name</label>
+                            <input type="text" class="form-control" v-model="form.vendor_name" placeholder="Vendor Name">
+                            <small class="error-control" v-if="errors.vendor_name">
+                                {{errors.vendor_name[0]}}
                             </small>
                         </div>
                     </div>
@@ -74,8 +83,8 @@
             return {
                 form: {},
                 isProcessing: false,
-                store: `/api/customers/store`,
-                resource: '/customers'
+                store: `/api/vendors`,
+                resource: '/vendors'
             }
         },
         methods:{

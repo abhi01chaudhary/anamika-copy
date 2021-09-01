@@ -242,15 +242,22 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'TopBar',
   data(){
     return {}
   },
-  methods:{
-    logout(){
-      localStorage.removeItem('usertoken')
-      this.$store.dispatch('user', null)
+  computed: {
+    ...mapGetters(['isLoggedIn'])
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch('logout')
+      .then(() => {
+        this.$router.push('/login')
+      })
     }
   }
 };
