@@ -5,7 +5,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-12">
+                <div class="col-10">
                     <div class="form-group">
                         <label>Vendor</label>
                         <typeahead :url="customerURL" :initialize="form.vendor"
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <!-- <div class="col-6">
                     <div class="form-group">
                         <label>Date</label>
                         <input type="date" class="form-control" v-model="form.date">
@@ -46,11 +46,32 @@
                             {{errors.date[0]}}
                         </small>
                     </div>
-                </div>
-                <div class="col-6">
+                </div> -->
+
+                <!-- <div class="col-6">
                     <div class="form-group">
                         <label>Due Date</label>
                         <input type="date" class="form-control" v-model="form.due_date">
+                        <small class="error-control" v-if="errors.due_date">
+                            {{errors.due_date[0]}}
+                        </small>
+                    </div>
+                </div> -->
+
+                <div class="col-10">
+                    <div class="form-group">
+                        <label>Date :</label>
+                        <v-nepalidatepicker classValue="form-control" v-model="form.date" />
+                         <small class="error-control" v-if="errors.date">
+                            {{errors.date[0]}}
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="col-10">
+                    <div class="form-group">
+                        <label>Due Date :</label>
+                        <v-nepalidatepicker classValue="form-control" v-model="form.due_date" />
                         <small class="error-control" v-if="errors.due_date">
                             {{errors.due_date[0]}}
                         </small>
@@ -147,6 +168,7 @@
     import Vue from 'vue'
     import {get, byMethod } from '../../lib/api'
     import {Typeahead } from '../../components/typeahead'
+    import VNepaliDatePicker from 'v-nepalidatepicker';
 
     function initialize(to) {
         let urls = {

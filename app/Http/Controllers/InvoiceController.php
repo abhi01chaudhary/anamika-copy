@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Counter;
 use DB;
+use App\Http\Traits\NepaliDateConverter;
 
 class InvoiceController extends Controller
 {
+    use NepaliDateConverter;
     /**
      * Display a listing of the resource.
      *
@@ -31,14 +33,18 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $date = $this->get_nepali_date(date('Y'), date('m'), date('d'));
+
+        $todayNepaliDate = $date['y']. '-'.$date['m'] . '-'.$date['d']; 
+        
         $counter = Counter::where('key', 'Invoice')->first();
 
         $form = [
             'number' => $counter->prefix . $counter->value,
             'customer_id' => null,
             'customer' => null,
-            'date' => date('Y-m-d'),
-            'due_date' => null,
+            'date' => $todayNepaliDate,
+            'due_date' => $todayNepaliDate,
             'reference' => null,
             'discount' => 0,
             'terms_and_conditions' => 'Default Terms',

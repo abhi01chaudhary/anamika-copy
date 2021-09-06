@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Expense;
 use App\Models\ExpenseCounter;
 use DB;
+use App\Http\Traits\NepaliDateConverter;
 
 class ExpenseController extends Controller
 {
+    use NepaliDateConverter;
+
     public function index()
     {
         $results = Expense::with(['vendor'])
@@ -25,15 +28,19 @@ class ExpenseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        $date = $this->get_nepali_date(date('Y'), date('m'), date('d'));
+
+        $todayNepaliDate = $date['y']. '-'.$date['m'] . '-'.$date['d']; 
+
         $counter = ExpenseCounter::where('key', 'Expense')->first();
 
         $form = [
             'number' => $counter->prefix . $counter->value,
             'vendor_id' => null,
             'vendor' => null,
-            'date' => date('Y-m-d'),
-            'due_date' => null,
+            'date' => $todayNepaliDate,
+            'due_date' => $todayNepaliDate,
             'reference' => null,
             'discount' => 0,
             'terms_and_conditions' => 'Default Terms',
@@ -46,7 +53,7 @@ class ExpenseController extends Controller
                 ]
             ]
         ];
-
+        
         return response()
             ->json(['form' => $form]);
     }

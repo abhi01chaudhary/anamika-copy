@@ -25,8 +25,8 @@ class InvoiceSeeder extends Seeder
             $invoice = Invoice::create([
                 'number' => 'INV-2000'.$i,
                 'customer_id' => $i,
-                'date' => '2017-12-'.$i,
-                'due_date' => '2018-01-'.$i,
+                'date' => '2078-12-'.$i,
+                'due_date' => '2079-01-'.$i,
                 'reference' => 'LPO #'.$i,
                 'terms_and_conditions' => $faker->text,
                 'discount' => mt_rand(0, 100),

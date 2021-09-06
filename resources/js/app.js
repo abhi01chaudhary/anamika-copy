@@ -7,10 +7,13 @@ import App from './App.vue'
 import router from './router'
 import bar from './components/progress'
 import store from './store'
+import VNepaliDatePicker from "v-nepalidatepicker";
 
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+
+Vue.use(VNepaliDatePicker);
 
 router.beforeEach((to, from, next) => {
     bar.start()
