@@ -2,7 +2,9 @@
     <div>
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Customers</span>
+                <span class="panel-title">
+                    <h3>All Customers</h3>
+                </span>
                 <div>
                     <router-link :to="{name: 'customers-create'}" class="btn btn-primary">
                         New Customer
@@ -10,6 +12,8 @@
                 </div>
             </div>
             <div class="panel-body">
+                <search :total_rows="total_rows" :search="search" @getRows="getRows($event)" @liveSearch="liveSearch" />
+
                 <table class="table table-link">
                     <thead>
                         <tr>
@@ -51,13 +55,20 @@
 <script type="text/javascript">
     import Vue from 'vue'
     import { get } from '../../lib/api'
+    import search from '../../components/layouts/search'
     
     export default {
+        name: 'CustomerIndex',
+        components:{
+            search
+        },
         data () {
             return {
                 model: {
                     data: []
-                }
+                },
+                search: '',
+                total_rows: 10
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -74,8 +85,27 @@
                     next()
                 })
         },
-        
         methods: {
+            getRows(event) {
+                this.total_rows = event.target.value
+                axios.get('/api/customers/get/total_rows', {params: { total_rows : this.total_rows}})
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            liveSearch(event){
+                this.search = event.target.value
+                axios.get('/api/customers/live/search', { params: { q: this.search } })
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
             detailsPage(item) {
                 this.$router.push(`/customers/${item.id}`)
             },

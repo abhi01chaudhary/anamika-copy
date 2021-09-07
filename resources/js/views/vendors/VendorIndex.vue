@@ -2,7 +2,9 @@
     <div>
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Vendors</span>
+                <span class="panel-title">
+                    <h3>All Vendors</h3>
+                </span>
                 <div>
                     <router-link :to="{name: 'vendors-create'}" class="btn btn-primary">
                         New Vendor
@@ -10,6 +12,8 @@
                 </div>
             </div>
             <div class="panel-body">
+                <search :total_rows="total_rows" :search="search" @getRows="getRows($event)" @liveSearch="liveSearch" />
+
                 <table class="table table-link">
                     <thead>
                         <tr>
@@ -53,13 +57,20 @@
 <script type="text/javascript">
     import Vue from 'vue'
     import { get } from '../../lib/api'
+    import search from '../../components/layouts/search'
     
     export default {
+        name: 'VendorIndex',
+        components:{
+            search
+        },
         data () {
             return {
                 model: {
                     data: []
-                }
+                },
+                search: '',
+                total_rows: 10
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -76,8 +87,27 @@
                     next()
                 })
         },
-        
         methods: {
+            getRows(event) {
+                this.total_rows = event.target.value
+                axios.get('/api/vendors/get/total_rows', {params: { total_rows : this.total_rows}})
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            liveSearch(event){
+                this.search = event.target.value
+                axios.get('/api/vendors/live/search', { params: { q: this.search } })
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
             detailsPage(item) {
                 this.$router.push(`/vendors/${item.id}`)
             },

@@ -10,6 +10,7 @@
                 </div>
             </div>
             <div class="panel-body">
+                <search :total_rows="total_rows" :search="search" @getRows="getRows($event)" @liveSearch="liveSearch($event)"/>
                 <table class="table table-link">
                     <thead>
                         <tr>
@@ -48,12 +49,18 @@
 
 <script>
     import {get} from '../../lib/api'
+    import search from '../../components/layouts/search'
 
     export default {
         name: 'ItemIndex',
+        components:{
+            search
+        },
         data(){
             return {
-                model: {}
+                model: {},
+                total_rows: 10,
+                search: ''
             }
         },
         beforeRouteEnter (to, from, next) {
@@ -70,6 +77,26 @@
                 })
         },
         methods: {
+            getRows(event) {
+                this.total_rows = event.target.value
+                axios.get('/api/items/get/total_rows', {params: { total_rows : this.total_rows}})
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            liveSearch(event){
+                this.search = event.target.value
+                axios.get('/api/items/live/search', { params: { q: this.search } })
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
             setData(res){
                 this.model = res.data.results
                 this.page = this.model.current_page

@@ -21,6 +21,23 @@ class ProductController extends Controller
             ->json(['results' => $results]);
     }
 
+    public function totalRows(){
+        $results = Product::latest()->paginate(request('total_rows'));
+        return response()
+            ->json(['results' => $results]);
+    }
+
+    public function liveSearch(){
+        $results = Product::orderBy('item_code')
+            ->when(request('q'), function($query) {
+                $query->where('item_code', 'like', '%'.request('q').'%')
+                    ->orWhere('description', 'like', '%'.request('q').'%');
+            })->paginate(10);
+
+        return response()
+            ->json(['results' => $results]);
+    }
+
     public function index(){
         
         $results = Product::latest()->paginate(10);

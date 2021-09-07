@@ -2,7 +2,9 @@
     <div>
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Products</span>
+                <span class="panel-title">
+                    <h3>All Products</h3>
+                </span>
                 <div>
                     <router-link to="/products/create" class="btn btn-primary">
                         New Product
@@ -10,6 +12,7 @@
                 </div>
             </div>
             <div class="panel-body">
+                <search :total_rows="total_rows" :search="search" @getRows="getRows($event)" @liveSearch="liveSearch" />
                 <table class="table table-link">
                     <thead>
                         <tr>
@@ -51,14 +54,20 @@
 <script>
 
     import {get} from '../../lib/api'
+    import search from '../../components/layouts/search'
 
     export default {
         name: 'ProductIndex',
+        components: {
+            search
+        },
         data(){
             return {
                 model: {
                     data: []
-                }
+                },
+                search: '',
+                total_rows: 50
             }
         },
         beforeRouteEnter (to, from, next) {
@@ -75,6 +84,26 @@
                 })
         },
         methods:{
+            getRows(event) {
+                this.total_rows = event.target.value
+                axios.get('/api/products/get/total_rows', {params: { total_rows : this.total_rows}})
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            liveSearch(event){
+                this.search = event.target.value
+                axios.get('/api/products/live/search', { params: { q: this.search } })
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
             setData(res){
                 Vue.set(this.$data, 'model', res.data.results)
                 this.page = this.model.current_page

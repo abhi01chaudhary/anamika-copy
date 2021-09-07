@@ -20,8 +20,27 @@ class CustomerController extends Controller
             ->json(['results' => $results]);
     }
 
+    public function totalRows(){
+        $results = Customer::latest()->paginate(request('total_rows'));
+        return response()
+            ->json(['results' => $results]);
+    }
+
+    public function liveSearch(){
+        $results = Customer::latest()
+            ->when(request('q'), function($query) {
+                $query->where('firstname', 'like', '%'.request('q').'%')
+                    ->orWhere('lastname', 'like', '%'.request('q').'%')
+                    ->orWhere('email', 'like', '%'.request('q').'%')
+                    ->orWhere('phone', 'like', '%'.request('q').'%');
+            })->paginate(10);
+
+        return response()
+            ->json(['results' => $results]);
+    }
+
     public function index(){
-        $results = Customer::orderBy('firstname')->paginate(10);
+        $results = Customer::latest()->paginate(10);
         return response()
             ->json(['results' => $results]);
     }

@@ -20,6 +20,23 @@ class ItemController extends Controller
             ->json(['results' => $results]);
     }
 
+    public function totalRows(){
+        $results = Item::latest()->paginate(request('total_rows'));
+        return response()
+            ->json(['results' => $results]);
+    }
+
+    public function liveSearch(){
+        $results = Item::orderBy('item_name')
+            ->when(request('q'), function($query) {
+                $query->where('item_name', 'like', '%'.request('q').'%')
+                    ->orWhere('description', 'like', '%'.request('q').'%');
+            })->paginate(10);
+
+        return response()
+            ->json(['results' => $results]);
+    }
+
     public function index(){
         $results = Item::latest()->paginate(10);
         return response()
