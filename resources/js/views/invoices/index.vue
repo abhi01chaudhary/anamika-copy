@@ -9,6 +9,7 @@
             </div>
         </div>
         <div class="panel-body">
+            <search :total_rows="total_rows" :search="search" @getRows="getRows($event)" @liveSearch="liveSearch($event)"/>
             <table class="table table-link">
                 <thead>
                     <tr>
@@ -50,12 +51,19 @@
 <script type="text/javascript">
     import Vue from 'vue'
     import { get } from '../../lib/api'
+    import search from '../../components/layouts/search'
+
     export default {
+        components:{
+            search
+        },
         data () {
             return {
                 model: {
                     data: []
-                }
+                },
+                total_rows: 10,
+                search: ''
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -72,6 +80,26 @@
                 })
         },
         methods: {
+            getRows(event) {
+                this.total_rows = event.target.value
+                axios.get('/api/invoices/get/total_rows', {params: { total_rows : this.total_rows}})
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            liveSearch(event){
+                this.search = event.target.value
+                axios.get('/api/invoices/live/search', { params: { q: this.search } })
+                    .then(res => {
+                        this.setData(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
             detailsPage(item) {
                 this.$router.push(`/invoices/${item.id}`)
             },

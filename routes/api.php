@@ -35,6 +35,8 @@ Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
 Route::put('/customers/{id}', [CustomerController::class, 'update']);
 
 Route::resource('/invoices', InvoiceController::class);
+Route::get('/invoices/live/search', [InvoiceController::class, 'livesearch']);
+Route::get('/invoices/get/total_rows', [InvoiceController::class, 'totalRows']);
 
 Route::resource('/products', ProductController::class);
 Route::get('/products/search', [ProductController::class, 'search']);
@@ -50,6 +52,8 @@ Route::get('/items/live/search', [ItemController::class, 'livesearch']);
 Route::get('/items/get/total_rows', [ItemController::class, 'totalRows']);
 
 Route::resource('/expenses', ExpenseController::class);
+Route::get('/expenses/live/search', [ExpenseController::class, 'livesearch']);
+Route::get('/expenses/get/total_rows', [ExpenseController::class, 'totalRows']);
 
 Route::resource('/vendors', VendorController::class);
 Route::get('/search/vendors', [VendorController::class, 'search']);

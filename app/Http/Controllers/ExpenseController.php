@@ -22,6 +22,23 @@ class ExpenseController extends Controller
         ->json(['results' => $results]);
     }
 
+    public function totalRows(){
+        $results = Expense::latest()->with(['customer'])->paginate(request('total_rows'));
+        return response()
+            ->json(['results' => $results]);
+    }
+
+    public function liveSearch(){
+        $results = Expense::latest()->with(['customer'])
+            ->when(request('q'), function($query) {
+                $query->where('item_name', 'like', '%'.request('q').'%')
+                    ->orWhere('description', 'like', '%'.request('q').'%');
+            })->paginate(10);
+
+        return response()
+            ->json(['results' => $results]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

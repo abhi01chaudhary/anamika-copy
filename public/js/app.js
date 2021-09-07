@@ -4075,8 +4075,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/api */ "./resources/js/lib/api.js");
+/* harmony import */ var _components_layouts_search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/layouts/search */ "./resources/js/components/layouts/search.vue");
 //
 //
 //
@@ -4126,14 +4127,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    search: _components_layouts_search__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       model: {
         data: []
-      }
+      },
+      total_rows: 10,
+      search: ''
     };
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -4153,11 +4162,39 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    getRows: function getRows(event) {
+      var _this2 = this;
+
+      this.total_rows = event.target.value;
+      axios.get('/api/expenses/get/total_rows', {
+        params: {
+          total_rows: this.total_rows
+        }
+      }).then(function (res) {
+        _this2.setData(res);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    liveSearch: function liveSearch(event) {
+      var _this3 = this;
+
+      this.search = event.target.value;
+      axios.get('/api/expenses/live/search', {
+        params: {
+          q: this.search
+        }
+      }).then(function (res) {
+        _this3.setData(res);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     detailsPage: function detailsPage(item) {
       this.$router.push("/expenses/".concat(item.id));
     },
     setData: function setData(res) {
-      vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(this.$data, 'model', res.data.results);
+      vue__WEBPACK_IMPORTED_MODULE_2__["default"].set(this.$data, 'model', res.data.results);
       this.page = this.model.current_page;
       this.$bar.finish();
     },
@@ -4657,8 +4694,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/api */ "./resources/js/lib/api.js");
+/* harmony import */ var _components_layouts_search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/layouts/search */ "./resources/js/components/layouts/search.vue");
 //
 //
 //
@@ -4708,14 +4746,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    search: _components_layouts_search__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       model: {
         data: []
-      }
+      },
+      total_rows: 10,
+      search: ''
     };
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -4735,11 +4780,39 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    getRows: function getRows(event) {
+      var _this2 = this;
+
+      this.total_rows = event.target.value;
+      axios.get('/api/invoices/get/total_rows', {
+        params: {
+          total_rows: this.total_rows
+        }
+      }).then(function (res) {
+        _this2.setData(res);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    liveSearch: function liveSearch(event) {
+      var _this3 = this;
+
+      this.search = event.target.value;
+      axios.get('/api/invoices/live/search', {
+        params: {
+          q: this.search
+        }
+      }).then(function (res) {
+        _this3.setData(res);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     detailsPage: function detailsPage(item) {
       this.$router.push("/invoices/".concat(item.id));
     },
     setData: function setData(res) {
-      vue__WEBPACK_IMPORTED_MODULE_1__["default"].set(this.$data, 'model', res.data.results);
+      vue__WEBPACK_IMPORTED_MODULE_2__["default"].set(this.$data, 'model', res.data.results);
       this.page = this.model.current_page;
       this.$bar.finish();
     },
@@ -47775,7 +47848,7 @@ var render = function() {
               }
             },
             [
-              _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+              _c("option", { attrs: { value: "3" } }, [_vm._v("10")]),
               _vm._v(" "),
               _c("option", { attrs: { value: "25" } }, [_vm._v("25")]),
               _vm._v(" "),
@@ -49344,48 +49417,67 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "panel-body" }, [
-      _c("table", { staticClass: "table table-link" }, [
-        _vm._m(0),
+    _c(
+      "div",
+      { staticClass: "panel-body" },
+      [
+        _c("search", {
+          attrs: { total_rows: _vm.total_rows, search: _vm.search },
+          on: {
+            getRows: function($event) {
+              return _vm.getRows($event)
+            },
+            liveSearch: function($event) {
+              return _vm.liveSearch($event)
+            }
+          }
+        }),
         _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.model.data, function(item) {
-            return _c(
-              "tr",
-              {
-                key: item.data,
-                on: {
-                  click: function($event) {
-                    return _vm.detailsPage(item)
+        _c("table", { staticClass: "table table-link" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.model.data, function(item) {
+              return _c(
+                "tr",
+                {
+                  key: item.data,
+                  on: {
+                    click: function($event) {
+                      return _vm.detailsPage(item)
+                    }
                   }
-                }
-              },
-              [
-                _c("td", { staticClass: "w-1" }, [_vm._v(_vm._s(item.id))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.date))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.number))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-9" }, [
-                  _vm._v(_vm._s(item.vendor.text))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [
-                  _vm._v(_vm._s(item.due_date))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [
-                  _vm._v(_vm._s(_vm._f("formatMoney")(item.total)))
-                ])
-              ]
-            )
-          }),
-          0
-        )
-      ])
-    ]),
+                },
+                [
+                  _c("td", { staticClass: "w-1" }, [_vm._v(_vm._s(item.id))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.date))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [
+                    _vm._v(_vm._s(item.number))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-9" }, [
+                    _vm._v(_vm._s(item.vendor.text))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [
+                    _vm._v(_vm._s(item.due_date))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [
+                    _vm._v(_vm._s(_vm._f("formatMoney")(item.total)))
+                  ])
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "panel-footer flex-between" }, [
       _c("div", [
@@ -50203,48 +50295,67 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "panel-body" }, [
-      _c("table", { staticClass: "table table-link" }, [
-        _vm._m(0),
+    _c(
+      "div",
+      { staticClass: "panel-body" },
+      [
+        _c("search", {
+          attrs: { total_rows: _vm.total_rows, search: _vm.search },
+          on: {
+            getRows: function($event) {
+              return _vm.getRows($event)
+            },
+            liveSearch: function($event) {
+              return _vm.liveSearch($event)
+            }
+          }
+        }),
         _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.model.data, function(item) {
-            return _c(
-              "tr",
-              {
-                key: item.data,
-                on: {
-                  click: function($event) {
-                    return _vm.detailsPage(item)
+        _c("table", { staticClass: "table table-link" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.model.data, function(item) {
+              return _c(
+                "tr",
+                {
+                  key: item.data,
+                  on: {
+                    click: function($event) {
+                      return _vm.detailsPage(item)
+                    }
                   }
-                }
-              },
-              [
-                _c("td", { staticClass: "w-1" }, [_vm._v(_vm._s(item.id))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.date))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.number))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-9" }, [
-                  _vm._v(_vm._s(item.customer.text))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [
-                  _vm._v(_vm._s(item.due_date))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "w-3" }, [
-                  _vm._v(_vm._s(_vm._f("formatMoney")(item.total)))
-                ])
-              ]
-            )
-          }),
-          0
-        )
-      ])
-    ]),
+                },
+                [
+                  _c("td", { staticClass: "w-1" }, [_vm._v(_vm._s(item.id))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [_vm._v(_vm._s(item.date))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [
+                    _vm._v(_vm._s(item.number))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-9" }, [
+                    _vm._v(_vm._s(item.customer.text))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [
+                    _vm._v(_vm._s(item.due_date))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "w-3" }, [
+                    _vm._v(_vm._s(_vm._f("formatMoney")(item.total)))
+                  ])
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "panel-footer flex-between" }, [
       _c("div", [
