@@ -23,17 +23,18 @@ class ExpenseController extends Controller
     }
 
     public function totalRows(){
-        $results = Expense::latest()->with(['customer'])->paginate(request('total_rows'));
+        $results = Expense::latest()->with(['vendor'])->paginate(request('total_rows'));
         return response()
             ->json(['results' => $results]);
     }
 
     public function liveSearch(){
-        $results = Expense::latest()->with(['customer'])
-            ->when(request('q'), function($query) {
-                $query->where('item_name', 'like', '%'.request('q').'%')
-                    ->orWhere('description', 'like', '%'.request('q').'%');
-            })->paginate(10);
+        $results = Expense::join('vendors', 'expenses.vendor_id', 'vendors.id')
+                ->with('vendor')
+                ->where('firstname', 'like', '%' . request('q') . '%')
+                ->orWhere('lastname', 'like', '%' . request('q') . '%')
+                ->orWhere('number', 'like', '%' . request('q') . '%')
+                ->paginate(10);
 
         return response()
             ->json(['results' => $results]);

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Item;
 use Faker\Factory;
+use DB;
 
 class ItemSeeder extends Seeder
 {
@@ -17,6 +18,8 @@ class ItemSeeder extends Seeder
     {
         $faker = Factory::create();
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Item::truncate();
 
         foreach(range(1, 10) as $i) {
@@ -26,5 +29,8 @@ class ItemSeeder extends Seeder
                 'unit_price' => mt_rand(100, 1000)
             ]);
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        
     }
 }

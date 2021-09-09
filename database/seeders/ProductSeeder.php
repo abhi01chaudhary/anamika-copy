@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use DB;
 
 class ProductSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Product::truncate();
 
         foreach(range(10, 60) as $i) {
@@ -24,5 +27,7 @@ class ProductSeeder extends Seeder
                 'quantity' => mt_rand(10, 1000),
             ]);
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

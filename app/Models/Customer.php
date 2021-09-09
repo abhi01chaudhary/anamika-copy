@@ -21,4 +21,8 @@ class Customer extends Model
         return $this->attributes['firstname'].'  '.$this->attributes['lastname'];
     }
 
+    public function invoice(){
+        return $this->belongsTo(Invoice::class);
+    }
+
 }

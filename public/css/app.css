@@ -11340,3 +11340,25 @@ span.form-remove {
   font-size: 35px;
   vertical-align: -webkit-baseline-middle;
 }
+
+@media print {
+  h1.h3.mb-0.text-gray-800 {
+    display: none;
+  }
+
+  ul#accordionSidebar {
+    display: none;
+  }
+
+  footer.sticky-footer.bg-white {
+    display: none;
+  }
+
+  .panel-heading {
+    display: none;
+  }
+
+  title {
+    display: none;
+  }
+}

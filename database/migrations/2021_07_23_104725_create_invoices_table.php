@@ -16,7 +16,7 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique();
-            $table->integer('customer_id')->unsigned();
+            $table->unsignedBigInteger('customer_id');
             $table->date('date');
             $table->date('due_date');
             $table->string('reference')->nullable();
@@ -29,8 +29,8 @@ class CreateInvoicesTable extends Migration
 
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_id')->unsigned();
-            $table->integer('product_id')->unsigned();
+            $table->unsignedBigInteger('invoice_id');
+            $table->unsignedBigInteger('product_id');
             $table->double('unit_price');
             $table->integer('qty');
             $table->timestamps();

@@ -23,11 +23,11 @@
 
 <script>
     export default {
-        name: 'search',
+        name: 'InvoiceSearch',
+        props: ['total_rows', 'search'],
         data(){
             return {}
-        },
-        props: ['total_rows', 'search']
+        }
     }
 </script>
 

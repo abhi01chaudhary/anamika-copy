@@ -33,11 +33,13 @@ class InvoiceController extends Controller
     }
 
     public function liveSearch(){
-        $results = Invoice::latest()->with(['customer'])
-            ->when(request('q'), function($query) {
-                $query->where('item_name', 'like', '%'.request('q').'%')
-                    ->orWhere('description', 'like', '%'.request('q').'%');
-            })->paginate(10);
+
+        $results = Invoice::join('customers', 'invoices.customer_id', 'customers.id')
+                ->with('customer')
+                ->where('firstname', 'like', '%' . request('q') . '%')
+                ->orWhere('lastname', 'like', '%' . request('q') . '%')
+                ->orWhere('number', 'like', '%' . request('q') . '%')
+                ->paginate(10);
 
         return response()
             ->json(['results' => $results]);

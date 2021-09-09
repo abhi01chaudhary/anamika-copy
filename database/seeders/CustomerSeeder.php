@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Customer;
 use Faker\Factory;
+use DB;
 
 class CustomerSeeder extends Seeder
 {
@@ -16,6 +17,8 @@ class CustomerSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create();
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         Customer::truncate();
 
@@ -28,5 +31,8 @@ class CustomerSeeder extends Seeder
                 'phone' => $faker->numerify('##########')
             ]);
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
     }
 }

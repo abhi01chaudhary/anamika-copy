@@ -6,6 +6,7 @@
                 <router-link to="/invoices" class="btn">Back</router-link>
                 <router-link :to="`/invoices/${model.id}/edit`" class="btn">Edit</router-link>
                 <button class="btn btn-error" @click="deleteItem">Delete</button>
+                <button class="btn btn-primary" @click="print">Print</button>
             </div>
         </div>
         <div class="panel-body">
@@ -133,6 +134,9 @@
                             this.$router.push('/invoices')
                         }
                     })
+            },
+            print(){
+                window.print();
             }
         }
     }

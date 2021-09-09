@@ -1,7 +1,9 @@
 <template>
     <div class="panel">
         <div class="panel-heading">
-            <span class="panel-title">Expenses</span>
+            <span class="panel-title">
+                <h3>All Expenses</h3>
+            </span>
             <div>
                 <router-link to="/expenses/create" class="btn btn-primary">
                     New Expense
@@ -52,7 +54,7 @@
 <script type="text/javascript">
     import Vue from 'vue'
     import { get } from '../../lib/api'
-    import search from '../../components/layouts/search'
+    import search from '../../components/layouts/InvoiceSearch'
 
     export default {
         components:{

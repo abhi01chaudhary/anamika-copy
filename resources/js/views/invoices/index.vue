@@ -1,7 +1,9 @@
 <template>
     <div class="panel">
         <div class="panel-heading">
-            <span class="panel-title">Invoices</span>
+            <span class="panel-title">
+                <h3>All Invoices</h3>
+            </span>
             <div>
                 <router-link to="/invoices/create" class="btn btn-primary">
                     New Invoice
@@ -51,7 +53,7 @@
 <script type="text/javascript">
     import Vue from 'vue'
     import { get } from '../../lib/api'
-    import search from '../../components/layouts/search'
+    import search from '../../components/layouts/InvoiceSearch'
 
     export default {
         components:{
@@ -104,6 +106,7 @@
                 this.$router.push(`/invoices/${item.id}`)
             },
             setData(res) {
+                console.log(res)
                 Vue.set(this.$data, 'model', res.data.results)
                 this.page = this.model.current_page
                 this.$bar.finish()

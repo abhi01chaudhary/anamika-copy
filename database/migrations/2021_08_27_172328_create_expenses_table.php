@@ -16,7 +16,7 @@ class CreateExpensesTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique();
-            $table->integer('vendor_id')->unsigned();
+            $table->unsignedBigInteger('vendor_id');
             $table->date('date');
             $table->date('due_date');
             $table->string('reference')->nullable();
@@ -29,8 +29,8 @@ class CreateExpensesTable extends Migration
 
         Schema::create('expense_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('expense_id')->unsigned();
-            $table->integer('item_id')->unsigned();
+            $table->unsignedBigInteger('expense_id');
+            $table->unsignedBigInteger('item_id');
             $table->double('unit_price');
             $table->integer('qty');
             $table->timestamps();

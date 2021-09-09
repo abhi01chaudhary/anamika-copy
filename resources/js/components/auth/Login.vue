@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="row justify-content-center py-5">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
           <div class="card">
             <div class="card-header text-center">
               <h4>Please sign in</h4>

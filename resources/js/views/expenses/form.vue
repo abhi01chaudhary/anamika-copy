@@ -38,25 +38,6 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-6">
-                    <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" class="form-control" v-model="form.date">
-                        <small class="error-control" v-if="errors.date">
-                            {{errors.date[0]}}
-                        </small>
-                    </div>
-                </div> -->
-
-                <!-- <div class="col-6">
-                    <div class="form-group">
-                        <label>Due Date</label>
-                        <input type="date" class="form-control" v-model="form.due_date">
-                        <small class="error-control" v-if="errors.due_date">
-                            {{errors.due_date[0]}}
-                        </small>
-                    </div>
-                </div> -->
 
                 <div class="col-10">
                     <div class="form-group">
@@ -190,7 +171,7 @@
                 store: '/api/expenses',
                 method: 'POST',
                 title: 'Create',
-                productURL: '/api/items/search',
+                productURL: '/api/search/items',
                 customerURL: '/api/search/vendors'
             }
         },

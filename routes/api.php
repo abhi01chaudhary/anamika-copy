@@ -47,7 +47,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [LoginController::class, 'register']);
 
 Route::resource('/items', ItemController::class);
-Route::get('/items/search', [ItemController::class, 'search']);
+Route::get('/search/items', [ItemController::class, 'search']);
 Route::get('/items/live/search', [ItemController::class, 'livesearch']);
 Route::get('/items/get/total_rows', [ItemController::class, 'totalRows']);
 

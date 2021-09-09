@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Faker\Factory;
+use DB;
 
 class InvoiceSeeder extends Seeder
 {
@@ -17,6 +18,8 @@ class InvoiceSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create();
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         Invoice::truncate();
         InvoiceItem::truncate();
@@ -42,5 +45,8 @@ class InvoiceSeeder extends Seeder
                 ]);
             }
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
     }
 }
