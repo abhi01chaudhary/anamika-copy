@@ -49783,11 +49783,11 @@ var render = function() {
                       _vm._v(_vm._s(item.lastname))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "w-9" }, [
+                    _c("td", { staticClass: "w-5" }, [
                       _vm._v(_vm._s(item.address))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "w-9" }, [
+                    _c("td", { staticClass: "w-3" }, [
                       _vm._v(_vm._s(item.phone))
                     ])
                   ]
@@ -52278,7 +52278,7 @@ var render = function() {
                       _vm._v(_vm._s(item.description))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "w-9" }, [
+                    _c("td", { staticClass: "w-3" }, [
                       _vm._v(_vm._s(item.unit_price))
                     ])
                   ]
@@ -52956,7 +52956,7 @@ var render = function() {
                       _vm._v(_vm._s(item.item_code))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "w-9" }, [
+                    _c("td", { staticClass: "w-4" }, [
                       _vm._v(_vm._s(item.description))
                     ]),
                     _vm._v(" "),
@@ -53776,11 +53776,11 @@ var render = function() {
                       _vm._v(_vm._s(item.vendor_name))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "w-9" }, [
+                    _c("td", { staticClass: "w-5" }, [
                       _vm._v(_vm._s(item.address))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "w-9" }, [
+                    _c("td", { staticClass: "w-3" }, [
                       _vm._v(_vm._s(item.phone))
                     ])
                   ]

@@ -31,8 +31,8 @@
                             <td class="w-3">{{item.firstname}}</td>
                             <td class="w-3">{{item.lastname}}</td>
                             <td class="w-3">{{item.vendor_name}}</td>
-                            <td class="w-9">{{item.address}}</td>
-                            <td class="w-9">{{item.phone}}</td>
+                            <td class="w-5">{{item.address}}</td>
+                            <td class="w-3">{{item.phone}}</td>
                         </tr>
                     </tbody>
                 </table>

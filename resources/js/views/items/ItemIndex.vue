@@ -25,7 +25,7 @@
                             <td class="w-1">{{item.id}}</td>
                             <td class="w-3">{{item.item_name}}</td>
                             <td class="w-3">{{item.description}}</td>
-                            <td class="w-9">{{item.unit_price}}</td>
+                            <td class="w-3">{{item.unit_price}}</td>
                         </tr>
                     </tbody>
                 </table>

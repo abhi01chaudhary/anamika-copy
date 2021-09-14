@@ -29,8 +29,8 @@
                             <td class="w-1">{{item.id}}</td>
                             <td class="w-3">{{item.firstname}}</td>
                             <td class="w-3">{{item.lastname}}</td>
-                            <td class="w-9">{{item.address}}</td>
-                            <td class="w-9">{{item.phone}}</td>
+                            <td class="w-5">{{item.address}}</td>
+                            <td class="w-3">{{item.phone}}</td>
                         </tr>
                     </tbody>
                 </table>
