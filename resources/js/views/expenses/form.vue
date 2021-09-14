@@ -5,7 +5,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-10">
+                <div class="col-6">
                     <div class="form-group">
                         <label>Vendor</label>
                         <typeahead :url="customerURL" :initialize="form.vendor"
@@ -13,6 +13,12 @@
                         <small class="error-control" v-if="errors.vendor_id">
                             {{errors.vendor_id[0]}}
                         </small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="">(Add if not on list)</label>
+                        <router-link :to="{path: '/vendors/create'}" class="btn btn-primary">Add New Vendor</router-link>
                     </div>
                 </div>
                 <div class="col-6">

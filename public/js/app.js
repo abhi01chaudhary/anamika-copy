@@ -4060,6 +4060,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4595,18 +4601,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/api */ "./resources/js/lib/api.js");
 /* harmony import */ var _components_typeahead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/typeahead */ "./resources/js/components/typeahead/index.js");
 /* harmony import */ var v_nepalidatepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-nepalidatepicker */ "./node_modules/v-nepalidatepicker/dist/v-nepalidatepicker.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -50109,7 +50103,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-10" }, [
+            _c("div", { staticClass: "col-6" }, [
               _c(
                 "div",
                 { staticClass: "form-group" },
@@ -50133,6 +50127,28 @@ var render = function() {
                         )
                       ])
                     : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("(Add if not on list)")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { to: { path: "/vendors/create" } }
+                    },
+                    [_vm._v("Add New Vendor")]
+                  )
                 ],
                 1
               )
@@ -51054,7 +51070,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-10" }, [
+            _c("div", { staticClass: "col-6" }, [
               _c(
                 "div",
                 { staticClass: "form-group" },
@@ -51078,6 +51094,28 @@ var render = function() {
                         )
                       ])
                     : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("(Add if not on list)")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { to: { path: "/customers/create" } }
+                    },
+                    [_vm._v("Add New Customer")]
+                  )
                 ],
                 1
               )

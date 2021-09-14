@@ -5,7 +5,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-10">
+                <div class="col-6">
                     <div class="form-group">
                         <label>Customer</label>
                         <typeahead :url="customerURL" :initialize="form.customer"
@@ -13,6 +13,12 @@
                         <small class="error-control" v-if="errors.customer_id">
                             {{errors.customer_id[0]}}
                         </small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="">(Add if not on list)</label>
+                        <router-link :to="{path: '/customers/create'}" class="btn btn-primary">Add New Customer</router-link>
                     </div>
                 </div>
                 <div class="col-6">
@@ -38,24 +44,6 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-6">
-                    <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" class="form-control" v-model="form.date">
-                        <small class="error-control" v-if="errors.date">
-                            {{errors.date[0]}}
-                        </small>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label>Due Date</label>
-                        <input type="date" class="form-control" v-model="form.due_date">
-                        <small class="error-control" v-if="errors.due_date">
-                            {{errors.due_date[0]}}
-                        </small>
-                    </div>
-                </div> -->
                 <div class="col-10">
                     <div class="form-group">
                         <label>Date :</label>
