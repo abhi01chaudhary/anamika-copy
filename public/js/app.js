@@ -50780,7 +50780,7 @@ var render = function() {
         _c("span", { staticClass: "badge badge-danger" }, [
           _vm._v("Total Unpaid")
         ]),
-        _c("strong", [_vm._v(": Rs." + _vm._s(_vm.totalTurnOver))])
+        _c("strong", [_vm._v(": Rs." + _vm._s(_vm.unPaidTurnOver))])
       ])
     ])
   ])
@@ -51752,7 +51752,7 @@ var render = function() {
         _c("span", { staticClass: "badge badge-danger" }, [
           _vm._v("Total Unpaid")
         ]),
-        _c("strong", [_vm._v(": Rs." + _vm._s(_vm.totalTurnOver))])
+        _c("strong", [_vm._v(": Rs." + _vm._s(_vm.unPaidTurnOver))])
       ])
     ])
   ])

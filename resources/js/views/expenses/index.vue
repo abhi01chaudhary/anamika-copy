@@ -69,7 +69,7 @@
         <div class="below panel">
             <div><span class="badge badge-primary">Total Turnover</span> <strong>: Rs.{{totalTurnOver}}</strong></div>
             <div><span class="badge badge-success">Total Paid</span><strong>: Rs.{{paidTurnOver}}</strong></div>
-            <div><span class="badge badge-danger">Total Unpaid</span><strong>: Rs.{{totalTurnOver}}</strong></div>
+            <div><span class="badge badge-danger">Total Unpaid</span><strong>: Rs.{{unPaidTurnOver}}</strong></div>
         </div>
     </div>
 </template>
