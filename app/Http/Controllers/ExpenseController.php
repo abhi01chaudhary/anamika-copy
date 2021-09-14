@@ -12,6 +12,16 @@ class ExpenseController extends Controller
 {
     use NepaliDateConverter;
 
+    private $totalTurnOver;
+    private $paidTurnOver;
+    private $unPaidTurnOver;
+
+    public function __construct(){
+        $this->totalTurnOver = Expense::sum('total');
+        $this->paidTurnOver = Expense::where('status', 'Paid')->sum('total');
+        $this->unPaidTurnOver = Expense::where('status', 'Un paid')->sum('total');
+    }
+
     public function index()
     {
         $results = Expense::with(['vendor'])
@@ -19,13 +29,23 @@ class ExpenseController extends Controller
         ->paginate(15);
 
         return response()
-        ->json(['results' => $results]);
+        ->json([
+            'results' => $results, 
+            'totalTurnOver' => $this->totalTurnOver, 
+            'paidTurnOver' => $this->paidTurnOver,
+            'unPaidTurnOver' => $this->unPaidTurnOver,
+        ]);
     }
 
     public function totalRows(){
         $results = Expense::latest()->with(['vendor'])->paginate(request('total_rows'));
         return response()
-            ->json(['results' => $results]);
+        ->json([
+            'results' => $results, 
+            'totalTurnOver' => $this->totalTurnOver, 
+            'paidTurnOver' => $this->paidTurnOver,
+            'unPaidTurnOver' => $this->unPaidTurnOver,
+        ]);
     }
 
     public function liveSearch(){
@@ -37,8 +57,45 @@ class ExpenseController extends Controller
                 ->paginate(10);
 
         return response()
-            ->json(['results' => $results]);
+        ->json([
+            'results' => $results, 
+            'totalTurnOver' => $this->totalTurnOver, 
+            'paidTurnOver' => $this->paidTurnOver,
+            'unPaidTurnOver' => $this->unPaidTurnOver,
+        ]);
     }
+
+    public function dateSearch(){
+        $firstDate = request('first_date');
+        $secondDate = request('second_date');
+
+        $results = Expense::latest()->whereBetween('date', [$firstDate, $secondDate])
+                ->paginate(10);
+
+        return response()
+        ->json([
+            'results' => $results, 
+            'totalTurnOver' => $this->totalTurnOver, 
+            'paidTurnOver' => $this->paidTurnOver,
+            'unPaidTurnOver' => $this->unPaidTurnOver,
+        ]);
+    }
+
+    public function statusSearch(){
+        $results = Expense::join('vendors', 'expenses.vendor_id', 'vendors.id')
+                ->with('vendor')
+                ->where('status', request('status'))
+                ->paginate(10);
+                
+        return response()
+        ->json([
+            'results' => $results, 
+            'totalTurnOver' => $this->totalTurnOver, 
+            'paidTurnOver' => $this->paidTurnOver,
+            'unPaidTurnOver' => $this->unPaidTurnOver,
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

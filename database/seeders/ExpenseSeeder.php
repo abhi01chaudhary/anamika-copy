@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Invoice;
-use App\Models\InvoiceItem;
+use App\Models\Expense;
+use App\Models\ExpenseItem;
 use Faker\Factory;
 use DB;
 
-class InvoiceSeeder extends Seeder
+class ExpenseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,13 +21,13 @@ class InvoiceSeeder extends Seeder
         
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        Invoice::truncate();
-        InvoiceItem::truncate();
+        Expense::truncate();
+        ExpenseItem::truncate();
 
         foreach(range(1, 30) as $i) {
-            $invoice = Invoice::create([
-                'number' => 'INV-2000'.$i,
-                'customer_id' => $i,
+            $expense = Expense::create([
+                'number' => 'EXP-2000'.$i,
+                'vendor_id' => $i,
                 'date' => '2078-12-'.$i,
                 'due_date' => '2079-01-'.$i,
                 'reference' => 'LPO #'.$i,
@@ -38,9 +38,9 @@ class InvoiceSeeder extends Seeder
             ]);
 
             foreach(range(1, mt_rand(2, 4)) as $j) {
-                InvoiceItem::create([
-                    'invoice_id' => $invoice->id,
-                    'product_id' => mt_rand(1, 40),
+                ExpenseItem::create([
+                    'expense_id' => $expense->id,
+                    'item_id' => mt_rand(1, 40),
                     'unit_price' => mt_rand(100, 500),
                     'qty' => mt_rand(1, 6)
                 ]);
@@ -48,6 +48,5 @@ class InvoiceSeeder extends Seeder
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
     }
 }

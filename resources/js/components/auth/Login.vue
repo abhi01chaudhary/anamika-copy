@@ -12,14 +12,22 @@
                 <div class="form-group">
                   <label for="email"> Email Address</label>
                   <input type="email" v-model="email" class="form-control" name="email" placeholder="Email Address">
+                  <small class="error-control" v-if="errors.email">
+                    {{errors.email[0]}}
+                  </small>
                 </div>
-
                 <div class="form-group">
                   <label for="password"> Password</label>
                   <input type="password" v-model="password" class="form-control" name="password" placeholder="Password">
+                  <small class="error-control" v-if="errors.password">
+                    {{errors.password[0]}}
+                  </small>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block">Sign in</button>
               </form>
+            </div>
+            <div class="card-footer" v-if="message">
+              <p class="text-center">{{message}}</p>
             </div>
           </div>
         </div>
@@ -37,7 +45,9 @@ export default{
     return {
       email: '',
       password: '',
-      method: 'POST'
+      method: 'POST',
+      errors: {},
+      message: ''
     }
   },
   methods:{
@@ -61,8 +71,21 @@ export default{
       let password = this.password
       this.$store.dispatch('login', { email, password })
       .then(() => this.$router.push('/dashboard'))
-      .catch(err => console.log(err))
+      .catch(error => {
+        if(error.response.status === 422) {
+          this.errors = error.response.data.errors
+        }
+        if(error.response.status == 401){
+          this.message = 'Waning! Username or Password Incorrect.'
+        }
+      })
     }
   }
 }
 </script>
+
+<style lang="scss">
+  .card-footer{
+    color: red;
+  }
+</style>
