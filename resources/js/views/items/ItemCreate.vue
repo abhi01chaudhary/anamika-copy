@@ -58,19 +58,20 @@
         },
         methods:{
             errors(){
-                console.log('here');
+                this.$toaster.success('Some Errors!')
             },
             onSave() {
                 this.errors = {}
                 this.isProcessing = true
                 byMethod(this.method, this.store, this.form)
                 .then((res) => {
+                    this.$toaster.success('Item Created Successfully!')
                     this.$router.push(`/items`)
-                    //Perform Success Action
                 })
                 .catch((error) => {
                     // error.response.status Check status code
                     if(error.response.status === 422) {
+                        this.$toaster.warning('Please fill in the required fields!')
                         this.errors = error.response.data.errors
                     }
                     this.isProcessing = false

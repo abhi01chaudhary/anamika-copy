@@ -8,12 +8,18 @@ import router from './router'
 import bar from './components/progress'
 import store from './store'
 import VNepaliDatePicker from "v-nepalidatepicker";
+import Toaster from 'v-toaster'
+// You need a specific loader for CSS files like https://github.com/webpack/css-loader
+import 'v-toaster/dist/v-toaster.css'
 
 require('./bootstrap');
 
 window.Vue = require('vue').default;
 
 Vue.use(VNepaliDatePicker);
+ 
+// optional set default imeout, the default is 10000 (10 seconds).
+Vue.use(Toaster, {timeout: 5000})
 
 router.beforeEach((to, from, next) => {
     bar.start()

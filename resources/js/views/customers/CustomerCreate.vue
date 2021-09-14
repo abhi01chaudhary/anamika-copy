@@ -88,12 +88,14 @@
 
                 axios.post(this.store, this.form)
                 .then((res) => {
+                    this.$toaster.success('Customer Created Successfully!')
                     this.$router.push(`${this.resource}`)
                     //Perform Success Action
                 })
                 .catch((error) => {
                     // error.response.status Check status code
                     if(error.response.status === 422) {
+                        this.$toaster.warning('Please fill in the required fields!')
                         this.errors = error.response.data.errors
                     }
                     this.isProcessing = false

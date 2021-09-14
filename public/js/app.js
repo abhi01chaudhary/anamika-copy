@@ -1025,6 +1025,21 @@ function getDefaultAdapter() {
   return adapter;
 }
 
+function stringifySafely(rawValue, parser, encoder) {
+  if (utils.isString(rawValue)) {
+    try {
+      (parser || JSON.parse)(rawValue);
+      return utils.trim(rawValue);
+    } catch (e) {
+      if (e.name !== 'SyntaxError') {
+        throw e;
+      }
+    }
+  }
+
+  return (encoder || JSON.stringify)(rawValue);
+}
+
 var defaults = {
 
   transitional: {
@@ -1057,7 +1072,7 @@ var defaults = {
     }
     if (utils.isObject(data) || (headers && headers['Content-Type'] === 'application/json')) {
       setContentTypeIfUnset(headers, 'application/json');
-      return JSON.stringify(data);
+      return stringifySafely(data);
     }
     return data;
   }],
@@ -3456,11 +3471,15 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
       this.isProcessing = true;
       axios.post(this.store, this.form).then(function (res) {
+        _this.$toaster.success('Customer Created Successfully!');
+
         _this.$router.push("".concat(_this.resource)); //Perform Success Action
 
       })["catch"](function (error) {
         // error.response.status Check status code
         if (error.response.status === 422) {
+          _this.$toaster.warning('Please fill in the required fields!');
+
           _this.errors = error.response.data.errors;
         }
 
@@ -3604,10 +3623,14 @@ __webpack_require__.r(__webpack_exports__);
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this2.$toaster.success('Customer Updated Successfully!');
+
           _this2.success(res);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this2.$toaster.warning('Please fill in the required fields!');
+
           _this2.errors = error.response.data.errors;
         }
 
@@ -4144,10 +4167,14 @@ function initialize(to) {
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this2.$toaster.success('Expense Created Successfully!');
+
           _this2.success(res);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this2.$toaster.warning('Please fill in the required fields!');
+
           _this2.errors = error.response.data.errors;
         }
 
@@ -4500,6 +4527,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4543,6 +4571,9 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$router.push('/expenses');
         }
       });
+    },
+    print: function print() {
+      window.print();
     }
   }
 });
@@ -4755,7 +4786,7 @@ function initialize(to) {
       store: '/api/invoices',
       method: 'POST',
       title: 'Create',
-      productURL: '/api/products/search',
+      productURL: '/api/search/products',
       customerURL: '/api/customers/search'
     };
   },
@@ -4835,10 +4866,14 @@ function initialize(to) {
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this2.$toaster.success('Invoice Created Successfully!');
+
           _this2.success(res);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this2.$toaster.warning('Please fill in the required fields!');
+
           _this2.errors = error.response.data.errors;
         }
 
@@ -5303,7 +5338,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     errors: function errors() {
-      console.log('here');
+      this.$toaster.success('Some Errors!');
     },
     onSave: function onSave() {
       var _this = this;
@@ -5311,11 +5346,14 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
-        _this.$router.push("/items"); //Perform Success Action
+        _this.$toaster.success('Item Created Successfully!');
 
+        _this.$router.push("/items");
       })["catch"](function (error) {
         // error.response.status Check status code
         if (error.response.status === 422) {
+          _this.$toaster.warning('Please fill in the required fields!');
+
           _this.errors = error.response.data.errors;
         }
 
@@ -5437,10 +5475,14 @@ __webpack_require__.r(__webpack_exports__);
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this2.$toaster.success('Item Updated Successfully!');
+
           _this2.success(res);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this2.$toaster.warning('Please fill in the required fields!');
+
           _this2.errors = error.response.data.errors;
         }
 
@@ -5792,6 +5834,8 @@ __webpack_require__.r(__webpack_exports__);
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this.$toaster.success('Products Created Successfully!');
+
           _this.$router.push({
             name: 'products'
           }); // this.success(res)
@@ -5799,6 +5843,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this.$toaster.warning('Please fill in the required fields!');
+
           _this.errors = error.response.data.errors;
         }
 
@@ -5928,10 +5974,14 @@ __webpack_require__.r(__webpack_exports__);
       this.show = false;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this.$toaster.success('Product Updated Successfully!');
+
           _this.success(res);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this.$toaster.warning('Please fill in the required fields!');
+
           _this.errors = error.response.data.errors;
         }
 
@@ -6299,11 +6349,15 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
       this.isProcessing = true;
       axios.post(this.store, this.form).then(function (res) {
+        _this.$toaster.success('Vendor Created Successfully!');
+
         _this.$router.push("".concat(_this.resource)); //Perform Success Action
 
       })["catch"](function (error) {
         // error.response.status Check status code
         if (error.response.status === 422) {
+          _this.$toaster.warning('Please fill in the required fields!');
+
           _this.errors = error.response.data.errors;
         }
 
@@ -6447,10 +6501,14 @@ __webpack_require__.r(__webpack_exports__);
       this.isProcessing = true;
       (0,_lib_api__WEBPACK_IMPORTED_MODULE_0__.byMethod)(this.method, this.store, this.form).then(function (res) {
         if (res.data && res.data.saved) {
+          _this2.$toaster.success('Vendor Updated Successfully!');
+
           _this2.success(res);
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
+          _this2.$toaster.warning('Please fill in the required fields!');
+
           _this2.errors = error.response.data.errors;
         }
 
@@ -6734,6 +6792,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/progress */ "./resources/js/components/progress/index.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var v_nepalidatepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! v-nepalidatepicker */ "./node_modules/v-nepalidatepicker/dist/v-nepalidatepicker.esm.js");
+/* harmony import */ var v_toaster__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! v-toaster */ "./node_modules/v-toaster/dist/v-toaster.js");
+/* harmony import */ var v_toaster__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(v_toaster__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var v_toaster_dist_v_toaster_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! v-toaster/dist/v-toaster.css */ "./node_modules/v-toaster/dist/v-toaster.css");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6744,11 +6805,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // You need a specific loader for CSS files like https://github.com/webpack/css-loader
+
+
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"];
-Vue.use(v_nepalidatepicker__WEBPACK_IMPORTED_MODULE_4__["default"]);
+Vue.use(v_nepalidatepicker__WEBPACK_IMPORTED_MODULE_4__["default"]); // optional set default imeout, the default is 10000 (10 seconds).
+
+Vue.use((v_toaster__WEBPACK_IMPORTED_MODULE_5___default()), {
+  timeout: 5000
+});
 _router__WEBPACK_IMPORTED_MODULE_1__["default"].beforeEach(function (to, from, next) {
   _components_progress__WEBPACK_IMPORTED_MODULE_2__["default"].start();
   next();
@@ -11706,6 +11774,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "span.badge.text-center {\n  display: block;\n  width: 50%;\n}\n.below.panel {\n  display: flex;\n  justify-content: space-between;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/v-toaster/dist/v-toaster.css":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/v-toaster/dist/v-toaster.css ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".v-toaster{position:fixed;top:50px;right:0;z-index:10000;width:300px;padding-left:10px;padding-right:10px}.v-toaster .v-toast{margin-bottom:10px;transition:all .3s ease;border:1px solid #454d5d;border-radius:8px;color:#fff;display:block;padding:1rem;background:rgba(69,77,93,.9);border-color:#454d5d}.v-toaster .v-toast.v-toast-enter,.v-toaster .v-toast.v-toast-leave-to{transform:translate(100%)}.v-toaster .v-toast.v-toast-success{background:rgba(50,182,67,.9);border-color:#32b643}.v-toaster .v-toast.v-toast-warning{background:rgba(255,183,0,.9);border-color:#ffb700}.v-toaster .v-toast.v-toast-info{background:rgba(91,192,222,.9);border-color:#5bc0de}.v-toaster .v-toast.v-toast-error{background:rgba(232,86,0,.9);border-color:#e85600}.v-toaster .v-toast.v-toast-primary{background:rgba(66,139,202,.9);border-color:#428bca}.v-toaster .v-toast .v-toast-btn-clear{background:transparent;border:0;color:currentColor;opacity:.45;text-decoration:none;float:right;cursor:pointer}.v-toaster .v-toast .v-toast-btn-clear:hover{opacity:.85}.v-toaster .v-toast .v-toast-btn-clear:before{content:\"\\2715\"}@media (max-width:300px){.v-toaster{width:100%}}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43281,6 +43373,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/v-toaster/dist/v-toaster.css":
+/*!***************************************************!*\
+  !*** ./node_modules/v-toaster/dist/v-toaster.css ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_v_toaster_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./v-toaster.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/v-toaster/dist/v-toaster.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_v_toaster_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_v_toaster_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -44456,6 +44578,16 @@ __vue_component__.install = install; // Export component by default
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__vue_component__);
 
+
+/***/ }),
+
+/***/ "./node_modules/v-toaster/dist/v-toaster.js":
+/*!**************************************************!*\
+  !*** ./node_modules/v-toaster/dist/v-toaster.js ***!
+  \**************************************************/
+/***/ (function(module) {
+
+(function(t,e){ true?module.exports=e():0})(this,function(){return function(t){function e(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return t[o].call(r.exports,r,r.exports,e),r.l=!0,r.exports}var n={};return e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,o){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:o})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p=".",e(e.s=6)}([function(t,e,n){var o=n(3);o.install=function(t,e){t.prototype.$toaster=new(t.extend(o))({propsData:e}),t.toaster=t.prototype.$toaster},t.exports=o},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={props:{timeout:{type:Number,default:1e4}},methods:{success:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};this.add(t,{theme:"v-toast-success",timeout:e.timeout})},info:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};this.add(t,{theme:"v-toast-info",timeout:e.timeout})},warning:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};this.add(t,{theme:"v-toast-warning",timeout:e.timeout})},error:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};this.add(t,{theme:"v-toast-error",timeout:e.timeout})},add:function(t,e){var n=this,o=e.theme,r=e.timeout;this.$parent||(this.$mount(),document.body.appendChild(this.$el));var i={message:t,theme:o,key:Date.now()+"-"+Math.random()};this.items.push(i),setTimeout(function(){return n.remove(i)},r||this.timeout)},remove:function(t){var e=this.items.indexOf(t);e>=0&&this.items.splice(e,1)}},data:function(){return{items:[]}}}},function(t,e){},function(t,e,n){n(2);var o=n(4)(n(1),n(5),null,null);t.exports=o.exports},function(t,e){t.exports=function(t,e,n,o){var r,i=t=t||{},s=typeof t.default;"object"!==s&&"function"!==s||(r=t,i=t.default);var u="function"==typeof i?i.options:i;if(e&&(u.render=e.render,u.staticRenderFns=e.staticRenderFns),n&&(u._scopeId=n),o){var a=u.computed||(u.computed={});Object.keys(o).forEach(function(t){var e=o[t];a[t]=function(){return e}})}return{esModule:r,exports:i,options:u}}},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"v-toaster"},[n("transition-group",{attrs:{name:"v-toast"}},t._l(t.items,function(e){return n("div",{key:e.key,staticClass:"v-toast",class:(o={},o[e.theme]=e.theme,o)},[n("a",{staticClass:"v-toast-btn-clear",on:{click:function(n){t.remove(e)}}}),t._v(t._s(e.message))]);var o}))],1)},staticRenderFns:[]}},function(t,e,n){t.exports=n(0)}])});
 
 /***/ }),
 
@@ -50720,6 +50852,12 @@ var render = function() {
                 "button",
                 { staticClass: "btn btn-error", on: { click: _vm.deleteItem } },
                 [_vm._v("Delete")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", on: { click: _vm.print } },
+                [_vm._v("Print")]
               )
             ],
             1
@@ -70537,7 +70675,7 @@ var index = {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_args":[["axios@0.21.3","C:\\\\Users\\\\abhis\\\\OneDrive\\\\Desktop\\\\sudip\\\\anamika-copy"]],"_development":true,"_from":"axios@0.21.3","_id":"axios@0.21.3","_inBundle":false,"_integrity":"sha512-JtoZ3Ndke/+Iwt5n+BgSli/3idTvpt5OjKyoCmz4LX5+lPiY5l7C1colYezhlxThjNa/NhngCUWZSZFypIFuaA==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.3","name":"axios","escapedName":"axios","rawSpec":"0.21.3","saveSpec":null,"fetchSpec":"0.21.3"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.3.tgz","_spec":"0.21.3","_where":"C:\\\\Users\\\\abhis\\\\OneDrive\\\\Desktop\\\\sudip\\\\anamika-copy","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.3"}');
+module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
 
 /***/ })
 

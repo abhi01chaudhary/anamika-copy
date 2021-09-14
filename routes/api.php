@@ -41,7 +41,7 @@ Route::get('/invoices/date/search', [InvoiceController::class, 'dateSearch']);
 Route::get('/invoices/status/search', [InvoiceController::class, 'statusSearch']);
 
 Route::resource('/products', ProductController::class);
-Route::get('/products/search', [ProductController::class, 'search']);
+Route::get('/search/products', [ProductController::class, 'search']);
 Route::get('/products/live/search', [ProductController::class, 'livesearch']);
 Route::get('/products/get/total_rows', [ProductController::class, 'totalRows']);
 

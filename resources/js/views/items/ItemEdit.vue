@@ -91,11 +91,13 @@
                 byMethod(this.method, this.store, this.form)
                 .then((res) => {
                     if(res.data && res.data.saved) {
+                        this.$toaster.success('Item Updated Successfully!')
                         this.success(res)
                     }
                 })
                 .catch((error) => {
                     if(error.response.status === 422) {
+                        this.$toaster.warning('Please fill in the required fields!')
                         this.errors = error.response.data.errors
                     }
                     this.isProcessing = false
