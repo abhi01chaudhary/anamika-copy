@@ -10,3 +10,9 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .accordion {
+        height: 100%;
+    }
+</style>
